@@ -1,10 +1,18 @@
 
 import React from 'react';
-import type { TileData } from '../types';
+import type { TileData, PowerUpType } from '../types';
 import { TILE_COLORS, BASE_TILE_STYLES } from '../constants';
+import { ColorDrainIcon, ShuffleIcon, ExplosionIcon, EasyMergeIcon } from './PowerUpIcons';
 
 const TILE_DIMENSION = 'clamp(2rem, 8vw, 3rem)';
 const GAP_SIZE = '0.25rem';
+
+const PowerUpIconMap: Record<PowerUpType, React.FC> = {
+  'COLOR_DRAIN': ColorDrainIcon,
+  'BOARD_SHUFFLE': ShuffleIcon,
+  'COLOR_EXPLOSION': ExplosionIcon,
+  'EASY_MERGE': EasyMergeIcon,
+};
 
 interface TileProps {
   tile: TileData;
@@ -13,20 +21,21 @@ interface TileProps {
 }
 
 const Tile: React.FC<TileProps> = ({ tile, row, col }) => {
-  const { value, isMatched, justSpawned } = tile;
+  const { value, isMatched, justSpawned, powerUp } = tile;
   
   if (value === null) {
     return null;
   }
 
-  const colorClass = value ? TILE_COLORS.get(value) || 'bg-gray-400' : '';
+  const IconComponent = powerUp ? PowerUpIconMap[powerUp] : null;
+  const colorClass = value ? TILE_COLORS.get(value) || '' : '';
   
   const positionStyle: React.CSSProperties = {
     width: TILE_DIMENSION,
     height: TILE_DIMENSION,
-    top: `calc(${row} * ( ${TILE_DIMENSION} + ${GAP_SIZE} ))`,
-    left: `calc(${col} * ( ${TILE_DIMENSION} + ${GAP_SIZE} ))`,
-    transition: 'top 0.15s ease-out, left 0.15s ease-out',
+    transform: `translate(calc(${col} * (${TILE_DIMENSION} + ${GAP_SIZE})), calc(${row} * (${TILE_DIMENSION} + ${GAP_SIZE})))`,
+    transition: 'transform 0.15s ease-out',
+    zIndex: justSpawned ? 10 : 1,
   };
 
   let animationClass = '';
@@ -38,10 +47,12 @@ const Tile: React.FC<TileProps> = ({ tile, row, col }) => {
 
   return (
     <div
-      className={`absolute ${BASE_TILE_STYLES} ${colorClass} ${animationClass}`}
+      className="absolute"
       style={positionStyle}
     >
-      {/* We can add tile.value here for debugging if needed */}
+      <div className={`${BASE_TILE_STYLES} ${colorClass} ${animationClass}`}>
+        {IconComponent && <IconComponent />}
+      </div>
     </div>
   );
 };

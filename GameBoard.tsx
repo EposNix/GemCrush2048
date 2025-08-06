@@ -8,11 +8,11 @@ const TILE_DIMENSION = 'clamp(2rem, 8vw, 3rem)';
 const GAP_SIZE = '0.25rem';
 
 const BackgroundGrid: React.FC = () => (
-  <div className={`grid grid-cols-${BOARD_SIZE} gap-[${GAP_SIZE}]`}>
+  <div className={`grid grid-cols-8 gap-1`}>
     {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, i) => (
       <div
         key={i}
-        className="bg-gray-700 rounded-md"
+        className="grid-cell-bg rounded-md"
         style={{ width: TILE_DIMENSION, height: TILE_DIMENSION }}
       />
     ))}
@@ -27,7 +27,7 @@ interface GameBoardProps {
 
 const GameBoard: React.FC<GameBoardProps> = ({ board, effects, onEffectComplete }) => {
   return (
-    <div className={`relative bg-gray-900/50 p-2 rounded-lg shadow-2xl`}>
+    <div className={`relative bg-black/20 p-2 rounded-lg shadow-2xl`}>
       <BackgroundGrid />
       <div className="absolute inset-0 p-2">
         {board.flatMap((row, rowIndex) =>

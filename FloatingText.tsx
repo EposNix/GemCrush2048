@@ -30,12 +30,13 @@ const FloatingText: React.FC<FloatingTextProps> = ({ text, row, col, onComplete 
     top: `calc(${row} * ( ${TILE_DIMENSION} + ${GAP_SIZE} ))`,
     left: `calc(${col} * ( ${TILE_DIMENSION} + ${GAP_SIZE} ) + (${TILE_DIMENSION} / 2))`,
     transform: 'translateX(-50%)',
+    textShadow: '0 2px 4px rgba(0,0,0,0.5)',
   };
 
   return (
     <div
       ref={ref}
-      className="absolute text-2xl font-bold text-yellow-300 pointer-events-none animate-float-up z-30"
+      className="absolute text-3xl font-bold text-yellow-300 pointer-events-none animate-float-up z-30"
       style={positionStyle}
       aria-hidden="true"
     >

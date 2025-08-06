@@ -1,0 +1,6 @@
+{
+  "name": "Gem Crush 2048",
+  "description": "A hybrid puzzle game combining the swipe mechanics of 2048 with the match-3-or-more objective of games like Candy Crush. Swipe to move all tiles, and any group of 3 or more identical tiles will be cleared, earning you points.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
